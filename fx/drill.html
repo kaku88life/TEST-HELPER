@@ -39,11 +39,16 @@ select,.btn{border:1px solid var(--cd);background:var(--sf);color:var(--tx);bord
 .opt{border:1px solid var(--cd);border-radius:8px;padding:10px 12px;margin-bottom:7px;font-size:.92em;display:flex;gap:9px;cursor:pointer;background:var(--sf);transition:background .12s}
 .opt:active{background:var(--bg)}
 .opt b{color:var(--mt);flex-shrink:0;font-variant-numeric:tabular-nums}
-.opt.ans{border-color:var(--gn);background:rgba(78,122,61,.11)}
+/* 色弱友善：顏色之外加「框線樣式＋符號」雙重線索 */
+.opt.ans{border:3px solid var(--gn);background:rgba(78,122,61,.16);padding:8px 10px;font-weight:700}
 .opt.ans b{color:var(--gn)}
-.opt.bad{border-color:var(--rd);background:rgba(179,69,58,.09)}
+.opt.ans::after{content:"✓ 正解";margin-left:auto;flex-shrink:0;align-self:center;background:var(--gn);color:#fff;font-size:.78em;font-weight:800;padding:2px 8px;border-radius:99px}
+.opt.bad{border:3px dashed var(--rd);background:rgba(179,69,58,.13);padding:8px 10px}
 .opt.bad b{color:var(--rd)}
-.opt.dim{opacity:.55}
+.opt.bad::after{content:"✕ 你選的";margin-left:auto;flex-shrink:0;align-self:center;background:var(--rd);color:#fff;font-size:.78em;font-weight:800;padding:2px 8px;border-radius:99px}
+.opt.dim{opacity:.5}
+.opt.sel{border:3px solid var(--cy);background:rgba(8,122,115,.12);padding:8px 10px;font-weight:700}
+.opt.sel b{color:var(--cy)}
 .warn{border-left:3px solid var(--rd);background:rgba(179,69,58,.07);padding:8px 10px;border-radius:0 6px 6px 0;font-size:.78em;color:var(--rd);margin-bottom:9px}
 .verdict{margin-top:10px;padding:9px 12px;border-radius:7px;font-size:.87em;font-weight:700}
 .verdict.ok{background:rgba(78,122,61,.13);color:var(--gn)}
@@ -399,7 +404,7 @@ function pick(n){
 
 function markPick(n){
   $('#opts').querySelectorAll('.opt').forEach(el => {
-    el.classList.toggle('ans', +el.dataset.i === n);
+    el.classList.toggle('sel', +el.dataset.i === n);   // 作答中的選取，與批改後的 .ans 正解樣式分開
   });
 }
 
